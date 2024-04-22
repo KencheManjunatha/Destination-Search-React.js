@@ -1,0 +1,51 @@
+// Write your code here
+import {Component} from 'react'
+import DestinationItem from '../DestinationItem'
+import './index.css'
+
+class DestinationSearch extends Component {
+  state = {searchInput: ''}
+
+  onChangesSearchInput = event => {
+    this.setState({searchInput: event.target.value})
+  }
+
+  render() {
+    const {searchInput} = this.state
+    const {destinationsList} = this.props
+    const searchDetails = destinationsList.filter(eachItem =>
+      eachItem.name.toLowerCase().includes(searchInput.toLowerCase()),
+    )
+    return (
+      <div className="bg-container">
+        <div className="destination-search-card">
+          <h1 className="heading">Destination Search</h1>
+          <div className="search-container">
+            <input
+              type="search"
+              className="search-input"
+              placeholder="Search"
+              value={searchInput}
+              onChange={this.onChangesSearchInput}
+            />
+            <img
+              src="https://assets.ccbp.in/frontend/react-js/destinations-search-icon-img.png"
+              alt="search icon"
+              className="search-icon"
+            />
+          </div>
+          <ul className="destination-list">
+            {searchDetails.map(eachDestination => (
+              <DestinationItem
+                key={eachDestination.id}
+                destinationDetails={eachDestination}
+              />
+            ))}
+          </ul>
+        </div>
+      </div>
+    )
+  }
+}
+
+export default DestinationSearch
